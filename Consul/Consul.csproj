@@ -27,14 +27,14 @@
     <AssemblyOriginatorKeyFile>../assets/consuldotnet.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" PrivateAssets="All" />
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' " >
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,4 +47,17 @@
   <ItemGroup>
     <DotNetCliToolReference Include="ILRepack" Version="2.0.18" />
   </ItemGroup>
+  <Target Name="ILRepack" AfterTargets="AfterBuild">
+    <!-- The ILRepack task will grab all build ouput assemblies
+    and merge them into a single exe file for easy distribution and integration
+    -->
+    <ItemGroup>
+      <ILRepackPackage Include="$(NuGetPackageRoot)\ilrepack\*\tools\ilrepack.exe" />
+      <NetStandardLocation Include="$(NuGetPackageRoot)NETStandard.Library\2.0.1\build\netstandard2.0\ref" />
+    </ItemGroup>
+
+    <Error Condition="!Exists(@(ILRepackPackage->'%(FullPath)'))" Text="You are trying to use the ILRepack
+ package, but it is not installed or at the correct location" />
+    <Exec WorkingDirectory="$(OutputPath)" Command="@(ILRepackPackage->'%(fullpath)') /lib:@(NetStandardLocation) /internalize /out:$(AssemblyName).dll $(AssemblyName).dll Newtonsoft.Json.dll" />
+  </Target>
 </Project>
