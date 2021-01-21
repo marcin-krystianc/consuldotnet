@@ -110,7 +110,7 @@ namespace Consul.Test
         [Fact]
         public async Task Lock_OneShot()
         {
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 100; i++)
             {
                 const string keyName = "test/lock/oneshot";
                 var lockOptions = new LockOptions(keyName)
@@ -120,7 +120,7 @@ namespace Consul.Test
 
                 Assert.Equal(Lock.DefaultLockWaitTime, lockOptions.LockWaitTime);
 
-                lockOptions.LockWaitTime = TimeSpan.FromSeconds(10);
+                lockOptions.LockWaitTime = TimeSpan.FromSeconds(1);
 
                 var lockKey = _client.CreateLock(lockOptions);
 
@@ -129,7 +129,7 @@ namespace Consul.Test
                 var contender = _client.CreateLock(new LockOptions(keyName)
                 {
                     LockTryOnce = true,
-                    LockWaitTime = TimeSpan.FromSeconds(10),
+                    LockWaitTime = TimeSpan.FromSeconds(1),
                 });
 
                 var stopwatch = Stopwatch.StartNew();
