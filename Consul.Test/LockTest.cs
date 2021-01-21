@@ -110,60 +110,63 @@ namespace Consul.Test
         [Fact]
         public async Task Lock_OneShot()
         {
-            const string keyName = "test/lock/oneshot";
-            var lockOptions = new LockOptions(keyName)
+            for (var i = 0; i < 10; i++)
             {
-                LockTryOnce = true
-            };
-
-            Assert.Equal(Lock.DefaultLockWaitTime, lockOptions.LockWaitTime);
-
-            lockOptions.LockWaitTime = TimeSpan.FromMilliseconds(1000);
-
-            var lockKey = _client.CreateLock(lockOptions);
-
-            await lockKey.Acquire(CancellationToken.None);
-
-            var contender = _client.CreateLock(new LockOptions(keyName)
-            {
-                LockTryOnce = true,
-                LockWaitTime = TimeSpan.FromMilliseconds(1000)
-            });
-
-            var stopwatch = Stopwatch.StartNew();
-
-            Assert.True(lockKey.IsHeld);
-            Assert.False(contender.IsHeld);
-
-            await TimeoutUtils.WithTimeout(
-                Assert.ThrowsAsync<LockMaxAttemptsReachedException>(async () => await contender.Acquire()));
-
-            Assert.False(stopwatch.ElapsedMilliseconds < lockOptions.LockWaitTime.TotalMilliseconds);
-            Assert.False(contender.IsHeld, "Contender should have failed to acquire");
-
-            Assert.True(lockKey.IsHeld);
-            Assert.False(contender.IsHeld);
-
-            await lockKey.Release();
-            Assert.False(lockKey.IsHeld);
-            Assert.False(contender.IsHeld);
-
-            while (contender.IsHeld == false)
-            {
-                try
+                const string keyName = "test/lock/oneshot";
+                var lockOptions = new LockOptions(keyName)
                 {
-                    await contender.Acquire();
-                    Assert.False(lockKey.IsHeld);
-                    Assert.True(contender.IsHeld);
-                }
-                catch (LockMaxAttemptsReachedException)
+                    LockTryOnce = true
+                };
+
+                Assert.Equal(Lock.DefaultLockWaitTime, lockOptions.LockWaitTime);
+
+                lockOptions.LockWaitTime = TimeSpan.FromSeconds(10);
+
+                var lockKey = _client.CreateLock(lockOptions);
+
+                await lockKey.Acquire(CancellationToken.None);
+
+                var contender = _client.CreateLock(new LockOptions(keyName)
                 {
-                    // Ignore because lock delay might be in effect.
+                    LockTryOnce = true,
+                    LockWaitTime = TimeSpan.FromSeconds(10),
+                });
+
+                var stopwatch = Stopwatch.StartNew();
+
+                Assert.True(lockKey.IsHeld);
+                Assert.False(contender.IsHeld);
+
+                await TimeoutUtils.WithTimeout(
+                    Assert.ThrowsAsync<LockMaxAttemptsReachedException>(async () => await contender.Acquire()));
+
+                Assert.False(stopwatch.ElapsedMilliseconds < lockOptions.LockWaitTime.TotalMilliseconds);
+                Assert.False(contender.IsHeld, "Contender should have failed to acquire");
+
+                Assert.True(lockKey.IsHeld);
+                Assert.False(contender.IsHeld);
+
+                await lockKey.Release();
+                Assert.False(lockKey.IsHeld);
+                Assert.False(contender.IsHeld);
+
+                while (contender.IsHeld == false)
+                {
+                    try
+                    {
+                        await contender.Acquire();
+                        Assert.False(lockKey.IsHeld);
+                        Assert.True(contender.IsHeld);
+                    }
+                    catch (LockMaxAttemptsReachedException)
+                    {
+                        // Ignore because lock delay might be in effect.
+                    }
                 }
+
+                await contender.Release();
+                await contender.Destroy();
             }
-
-            await contender.Release();
-            await contender.Destroy();
         }
 
         [Fact]
