@@ -70,7 +70,7 @@ jobs:
         run: |
           cd Consul.Test
           ./consul agent -dev -config-file test_config.json &
-          dotnet test --configuration=Release --no-build -v=Normal
+          dotnet test --configuration=Release --no-build -v=Normal --filter "Lock_OneShot"
       - name: Create NuGet package
         if: runner.os == 'Windows'
         run: |
