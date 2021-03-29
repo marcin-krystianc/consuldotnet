@@ -42,5 +42,5 @@ jobs:
       # - name: locals all -l
       #  run: dotnet nuget locals all -l
 
-      - name: Build
-        run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true --verbosity detailed --disable-parallel 
+      - name: Restore
+        run: dotnet restore --configuration=Release -p:TreatWarningsAsErrors=true --disable-parallel 
