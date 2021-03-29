@@ -32,7 +32,7 @@ jobs:
                   
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
       - name: nuget list source
-       run: dotnet nuget list source
+        run: dotnet nuget list source
         
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
       # - name: Clear http-cache
