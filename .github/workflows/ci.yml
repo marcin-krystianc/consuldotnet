@@ -39,8 +39,8 @@ jobs:
       #  run: dotnet nuget locals http-cache --clear
         
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
-      - name: locals all -l
-        run: dotnet nuget locals all -l
+      # - name: locals all -l
+      #  run: dotnet nuget locals all -l
 
       - name: Build
         run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
