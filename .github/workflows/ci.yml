@@ -48,8 +48,14 @@ jobs:
           
       - name: dir1
         run: dir C:\Users\runneradmin\AppData\Local\NuGet\v3-cache
+        
+      - name: dir2
         run: dir C:\Users\runneradmin\.nuget\packages\
+        
+      - name: dir3
         run: dir C:\Users\runneradmin\AppData\Local\Temp\NuGetScratch
+        
+      - name: dir4
         run: dir C:\Users\runneradmin\AppData\Local\NuGet\plugins-cache
         
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
