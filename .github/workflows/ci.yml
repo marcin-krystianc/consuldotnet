@@ -54,7 +54,7 @@ jobs:
           unzip consul.zip
           rm consul.zip
       - name: Build
-        run: dotnet nuget list source && dotnet nuget locals all --clear && dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
+        run: dotnet nuget list source && dotnet nuget locals http-cache --clear && dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
       - name: Run tests
         shell: bash
         run: |
