@@ -1,4 +1,4 @@
-name: CI0
+name: CI2
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
     
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
       - name: Clear http-cache
-        run: dotnet nuget list source && dotnet nuget locals http-cache --clear
+        run: dotnet nuget list source
 
       - name: Build
         run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
