@@ -30,7 +30,7 @@ jobs:
         with:
           dotnet-version: 3.1.404
                   
-      Workaround for https://github.com/actions/setup-dotnet/issues/155
+      # Workaround for https://github.com/actions/setup-dotnet/issues/155
       - name: nuget list source
        run: dotnet nuget list source
         
