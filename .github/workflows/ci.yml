@@ -43,7 +43,7 @@ jobs:
         run: dotnet nuget locals all -l
         
       - name: dir1
-        run: dir C:\Users\runneradmin\AppData\Local\NuGet\v3-cache
+        run: dir C:\Users\runneradmin\AppData\Local\NuGet
         
       - name: dir2
         run: dir C:\Users\runneradmin\.nuget\packages\
