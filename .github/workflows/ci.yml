@@ -43,6 +43,6 @@ jobs:
         run: dotnet nuget locals all -l
 
       - name: Build
-        run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
+        run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true --verbosity diag 
 
       
