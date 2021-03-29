@@ -41,15 +41,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup .NET Core SDK
-        if: runner.os != 'Windows'
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.404
-    
-      # Workaround for https://github.com/actions/setup-dotnet/issues/155
-      - name: Clear http-cache
-        run: dotnet nuget list source && dotnet nuget locals http-cache --clear
-
       - name: Build
         run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
 
