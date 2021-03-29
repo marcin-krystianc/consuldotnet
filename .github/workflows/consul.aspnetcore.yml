@@ -20,8 +20,12 @@ jobs:
         with:
           dotnet-version: 3.1.404
 
+      # Workaround for https://github.com/actions/setup-dotnet/issues/155
+      - name: Consul | AspNetCore | Clear http-cache
+        run: dotnet nuget list source && dotnet nuget locals http-cache --clear
+
       - name: Consul | AspNetCore | Build
-        run: dotnet nuget list source && dotnet nuget locals http-cache --clear && dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
+        run: dotnet build -c=Release -p:TreatWarningsAsErrors=true
 
       - name: Consul | AspNetCore | Tests
         run: |
