@@ -46,7 +46,7 @@ jobs:
         run: dir C:\Users
         
       - name: dir2
-        run: dir C:\Users\runneradmin\.nuget\packages\
+        run: dir C:\Users\runneradmin\.nuget\
         
       - name: dir3
         run: dir C:\Users\runneradmin\AppData\Local\Temp\NuGetScratch
