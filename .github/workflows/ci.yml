@@ -43,4 +43,4 @@ jobs:
       #  run: dotnet nuget locals all -l
 
       - name: Restore
-        run: dotnet restore --configuration=Release -p:TreatWarningsAsErrors=true --disable-parallel 
+        run: dotnet restore -p:TreatWarningsAsErrors=true --disable-parallel 
