@@ -44,5 +44,3 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true --verbosity diag --disable-parallel 
-
-      
