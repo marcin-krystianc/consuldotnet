@@ -28,7 +28,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.404
+          dotnet-version: 3.1.407
                   
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
       # - name: nuget list source
