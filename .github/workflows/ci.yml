@@ -31,6 +31,14 @@ jobs:
           dotnet-version: 3.1.404
                   
       # Workaround for https://github.com/actions/setup-dotnet/issues/155
+      - name: nuget list source
+        run: dotnet nuget list source
+        
+      # Workaround for https://github.com/actions/setup-dotnet/issues/155
+      - name: Clear http-cache
+        run: dotnet nuget locals http-cache --clear
+        
+      # Workaround for https://github.com/actions/setup-dotnet/issues/155
       - name: locals all -l
         run: dotnet nuget locals all -l
         
