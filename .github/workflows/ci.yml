@@ -53,8 +53,14 @@ jobs:
           curl -sSL https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_${SYSTEM}_amd64.zip -o consul.zip
           unzip consul.zip
           rm consul.zip
+
+      # Workaround for https://github.com/actions/setup-dotnet/issues/155
+      - name: Clear http-cache
+        run: dotnet nuget list source && dotnet nuget locals http-cache --clear
+
       - name: Build
-        run: dotnet nuget list source && dotnet nuget locals http-cache --clear && dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
+        run: dotnet build --configuration=Release -p:TreatWarningsAsErrors=true
+
       - name: Run tests
         shell: bash
         run: |
