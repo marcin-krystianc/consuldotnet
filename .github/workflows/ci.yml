@@ -44,7 +44,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.404
+          dotnet-version: 5.0.202
       - name: Download Consul
         shell: bash
         run: |
