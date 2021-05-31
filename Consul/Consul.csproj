@@ -22,7 +22,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
     <PackageReference Include="ILMerge" Version="3.0.41" PrivateAssets="All" />
     <PackageReference Update="Newtonsoft.Json" PrivateAssets="All" />
     <Reference Include="System.Net.Http" />
