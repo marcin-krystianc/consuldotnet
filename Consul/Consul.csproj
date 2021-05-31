@@ -22,7 +22,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' ">
     <PackageReference Include="ILMerge" Version="3.0.41" PrivateAssets="All" />
     <PackageReference Update="Newtonsoft.Json" PrivateAssets="All" />
     <Reference Include="System.Net.Http" />
@@ -30,7 +30,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
-  <Target Name="ILMerge" AfterTargets="AfterBuild" Condition=" '$(TargetFramework)' == 'net461' And '$(OS)' == 'Windows_NT'">
+  <Target Name="ILMerge" AfterTargets="AfterBuild" Condition=" '$(TargetFrameworkIdentifier)' == '.NETFramework' And '$(OS)' == 'Windows_NT'">
     <ItemGroup>
       <BuildArtifacts Include="$(OutputPath)$(AssemblyName).*" />
       <ArtifactsToMerge Include="$(OutputPath)Newtonsoft.Json.dll" />
