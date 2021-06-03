@@ -38,7 +38,7 @@
       <ILRepackCommand>$(ILRepack) /parallel /internalize /out:ILRepack/$(AssemblyName).dll</ILRepackCommand>
       <ILRepackCommand>$(ILRepackCommand) /keyfile:$([System.IO.Path]::GetFullPath('$(AssemblyOriginatorKeyFile)'))</ILRepackCommand>
       <ILRepackCommand>$(ILRepackCommand) $(AssemblyName).dll @(ArtifactsToMerge->'%(filename)%(extension)', ' ')</ILRepackCommand>
-      <ILRepackCommand>$(ILRepackCommand)</ILRepackCommand>
+      <ILRepackCommand>mono $(ILRepackCommand)</ILRepackCommand>
     </PropertyGroup>
     <MakeDir Directories="$(OutputPath)/ILRepack" />
     <Exec WorkingDirectory="$(OutputPath)" Command="$(ILRepackCommand)" ContinueOnError="false" StandardOutputImportance="normal" />
