@@ -58,7 +58,7 @@ jobs:
           name: consul-logs-${{ matrix.os }}
           path: Consul.Test/consul*.log
 
-  Consul.AspNetCore:
+  Consul_AspNetCore:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
     strategy:
       matrix:
