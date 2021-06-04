@@ -66,8 +66,7 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          cd Consul.Test
-          ./consul agent -dev -config-file test_config.json -log-file consul.log >consul-stdout.log 2>consul-stderr.log &
+          ./Consul.Test/consul agent -dev -config-file Consul.Test/test_config.json -log-file consul.log >consul-stdout.log 2>consul-stderr.log &
           dotnet test Consul.Test --configuration=Release --logger "GitHubActions;report-warnings=false" --no-build -v=Normal --framework=${{ matrix.framework }}
       - name: Upload Consul logs
         if: failure()
