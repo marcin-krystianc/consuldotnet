@@ -6,11 +6,29 @@ on:
 
 jobs:
 
+
+  Consul_AspNetCore:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, windows-2019, macos-10.15]
+        framework: [netcoreapp2.1]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup .NET Core SDK v3.1.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+      - name: Build
+        run: dotnet build Consul.AspNetCore.Test --configuration=Release -p:TreatWarningsAsErrors=true --framework=${{ matrix.framework }}
+      - name: Run tests
+        shell: bash
+        run: dotnet test Consul.AspNetCore.Test --configuration=Release --logger "GitHubActions;report-warnings=false" --no-build -v=Normal --framework=${{ matrix.framework }}
+
   # Build and test on all major platforms.
-  # Repack to avoid Newtonsoft.Json dependency in .NET Framework (This is to
-  # prevent issues with mismatched JSON.NET versions in user projects).
-  # Create a NuGet package on Windows only, as we build for .NET Framework 4.6.1
-  # and for .NET Standard 2.0.
   Consul:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
     strategy:
@@ -48,7 +66,8 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          ./Consul.Test/consul agent -dev -config-file test_config.json -log-file consul.log >consul-stdout.log 2>consul-stderr.log &
+          cd Consul.Test
+          ./consul agent -dev -config-file test_config.json -log-file consul.log >consul-stdout.log 2>consul-stderr.log &
           dotnet test Consul.Test --configuration=Release --logger "GitHubActions;report-warnings=false" --no-build -v=Normal --framework=${{ matrix.framework }}
       - name: Upload Consul logs
         if: failure()
@@ -56,24 +75,3 @@ jobs:
         with:
           name: consul-logs-${{ matrix.consul }}-${{ matrix.framework }}-${{ matrix.os }}
           path: consul*.log
-
-  Consul_AspNetCore:
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.id != github.event.pull_request.base.repo.id
-    strategy:
-      matrix:
-        os: [ubuntu-18.04, windows-2019, macos-10.15]
-        framework: [netcoreapp2.1]
-      fail-fast: false
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup .NET Core SDK v3.1.x
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.x
-      - name: Build
-        run: dotnet build Consul.AspNetCore.Test --configuration=Release -p:TreatWarningsAsErrors=true --framework=${{ matrix.framework }}
-      - name: Run tests
-        shell: bash
-        run: dotnet test Consul.AspNetCore.Test --configuration=Release --logger "GitHubActions;report-warnings=false" --no-build -v=Normal --framework=${{ matrix.framework }}
