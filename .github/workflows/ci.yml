@@ -54,7 +54,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          name: consul-logs-${{ matrix.consul |}-${{ matrix.framework }}-${{ matrix.os }}
+          name: consul-logs-${{ matrix.consul }}-${{ matrix.framework }}-${{ matrix.os }}
           path: consul*.log
 
   Consul_AspNetCore:
