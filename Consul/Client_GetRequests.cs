@@ -318,6 +318,7 @@ namespace Consul
             if (!string.IsNullOrEmpty(Options.Token))
             {
                 message.Headers.Add("X-Consul-Token", Options.Token);
+                message.Headers.Add("location", clientConfig.Address.ToString());
             }
         }
     }
