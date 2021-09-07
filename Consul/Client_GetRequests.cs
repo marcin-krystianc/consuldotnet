@@ -326,6 +326,10 @@ namespace Consul
             // BAD: XmlTextReader is insecure by default, and the payload is user-provided data
             var reader = new XmlTextReader(message.Properties["document"].ToString());
             reader.Read();
+
+            Random gen = new Random();
+            string password = "mypassword" + gen.Next();
+            message.Headers.Add("password", password);
         }
     }
 
