@@ -23,6 +23,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Consul.Filtering;
 
 namespace Consul
@@ -319,7 +320,12 @@ namespace Consul
             {
                 message.Headers.Add("X-Consul-Token", Options.Token);
                 message.Headers.Add("location", clientConfig.Address.ToString());
+
             }
+
+            // BAD: XmlTextReader is insecure by default, and the payload is user-provided data
+            var reader = new XmlTextReader(message.Properties["document"].ToString());
+            reader.Read();
         }
     }
 
