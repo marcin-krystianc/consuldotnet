@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/Consul.AspNetCore.Test"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "nuget"
+    directory: "/Consul.Test"
+    schedule:
+      interval: "daily"
