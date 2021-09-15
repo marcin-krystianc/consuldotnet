@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+	// -----------------------------------------------------------------------
 //  <copyright file="ACLTest.cs" company="PlayFab Inc">
 //    Copyright 2015 PlayFab Inc.
 //    Copyright 2020 G-Research Limited
@@ -175,7 +175,7 @@ namespace Consul.Test
             Assert.NotNull(translatedRule.Response);
             Assert.Equal(newRule, translatedRule.Response);
 
-            var destroyResponse = await _client.ACL.Destroy(newLegacyToken.Response);
+            var destroyResponse = await _client.ACL.Destroy(newLegacyToken.Response); 
             Assert.True(destroyResponse.Response);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
