@@ -334,7 +334,7 @@ namespace Consul
                     {
                         try
                         {
-                            LockSession = await CreateSession().ConfigureAwait(false);
+                            LockSession = await CreateSessionAsync().ConfigureAwait(false);
                             _sessionRenewTask = _client.Session.RenewPeriodic(Opts.SessionTTL, LockSession, WriteOptions.Default, _cts.Token);
                         }
                         catch (Exception ex)
@@ -658,7 +658,7 @@ namespace Consul
         /// CreateSession is used to create a new managed session
         /// </summary>
         /// <returns>The session ID</returns>
-        private async Task<string> CreateSession()
+        private async Task<string> CreateSessionAsync()
         {
             var se = new SessionEntry
             {
@@ -787,7 +787,7 @@ namespace Consul
         /// <summary>
         /// DefaultSemaphoreSessionTTL is the default session TTL if no Session is provided when creating a new Semaphore. This is used because we do not have any other check to depend upon.
         /// </summary>
-        private readonly TimeSpan DefaultLockSessionTTL = TimeSpan.FromSeconds(15);
+        private readonly TimeSpan _defaultLockSessionTtl = TimeSpan.FromSeconds(15);
 
         private string _prefix;
 
@@ -839,7 +839,7 @@ namespace Consul
             Prefix = prefix;
             Limit = limit;
             SessionName = DefaultLockSessionName;
-            SessionTTL = DefaultLockSessionTTL;
+            SessionTTL = _defaultLockSessionTtl;
             MonitorRetryTime = Semaphore.DefaultMonitorRetryTime;
             SemaphoreWaitTime = Semaphore.DefaultSemaphoreWaitTime;
         }

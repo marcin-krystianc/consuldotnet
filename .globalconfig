@@ -6,3 +6,6 @@ is_global = true
 # https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/categories
 dotnet_analyzer_diagnostic.category-reliability.severity = warning
 dotnet_analyzer_diagnostic.category-security.severity = warning
+
+# https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview#code-style-analysis
+dotnet_diagnostic.IDE1006.severity = warning

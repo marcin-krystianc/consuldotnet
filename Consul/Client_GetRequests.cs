@@ -63,10 +63,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The result of the GET, including a deserialised generic type object</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<QueryResult<TOut>> Execute(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new QueryResult<TOut>();
 
             var message = new HttpRequestMessage(HttpMethod.Get, BuildConsulUri(Endpoint, Params));
@@ -96,8 +98,8 @@ namespace Consul
                 result.Response = Deserialize<TOut>(ResponseStream);
             }
 
-            result.RequestTime = timer.Elapsed;
-            timer.Stop();
+            result.RequestTime = _timer.Elapsed;
+            _timer.Stop();
 
             return result;
         }
@@ -107,10 +109,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The result of the GET, including a stream of data</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<QueryResult<Stream>> ExecuteStreaming(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new QueryResult<Stream>();
 
             var message = new HttpRequestMessage(HttpMethod.Get, BuildConsulUri(Endpoint, Params));
@@ -129,8 +133,8 @@ namespace Consul
                     response.StatusCode), response.StatusCode);
             }
 
-            result.RequestTime = timer.Elapsed;
-            timer.Stop();
+            result.RequestTime = _timer.Elapsed;
+            _timer.Stop();
 
             return result;
         }
@@ -259,10 +263,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The results of the GET, including a string of returned data</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<QueryResult<string>> Execute(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new QueryResult<string>();
 
             var message = new HttpRequestMessage(HttpMethod.Get, BuildConsulUri(Endpoint, Params));
@@ -294,8 +300,8 @@ namespace Consul
                 }
             }
 
-            timer.Stop();
-            result.RequestTime = timer.Elapsed;
+            _timer.Stop();
+            result.RequestTime = _timer.Elapsed;
 
             return result;
         }

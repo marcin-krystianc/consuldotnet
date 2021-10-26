@@ -241,7 +241,7 @@ namespace Consul
                     // Check if we need to create a session first
                     if (string.IsNullOrEmpty(Opts.Session))
                     {
-                        LockSession = await CreateSession().ConfigureAwait(false);
+                        LockSession = await CreateSessionAsync().ConfigureAwait(false);
                         _sessionRenewTask = _client.Session.RenewPeriodic(Opts.SessionTTL, LockSession,
                             WriteOptions.Default, _cts.Token);
                     }
@@ -541,7 +541,7 @@ namespace Consul
         /// CreateSession is used to create a new managed session
         /// </summary>
         /// <returns>The session ID</returns>
-        private async Task<string> CreateSession()
+        private async Task<string> CreateSessionAsync()
         {
             var se = new SessionEntry
             {

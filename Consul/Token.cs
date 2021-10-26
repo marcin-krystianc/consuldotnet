@@ -238,7 +238,9 @@ namespace Consul
         /// <param name="writeOptions">Customized write options</param>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>A write result containing the created ACL token</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<WriteResult<TokenEntry>> Clone(string id, string description, WriteOptions writeOptions, CancellationToken ct = default(CancellationToken))
+#pragma warning restore IDE1006 // Naming Styles
         {
             var body = new Dictionary<string, string>
                 {

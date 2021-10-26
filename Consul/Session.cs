@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
-using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -29,20 +28,11 @@ namespace Consul
 {
     public class SessionBehavior : IEquatable<SessionBehavior>
     {
-        private static readonly SessionBehavior release = new SessionBehavior() { Behavior = "release" };
-        private static readonly SessionBehavior delete = new SessionBehavior() { Behavior = "delete" };
-
         public string Behavior { get; private set; }
 
-        public static SessionBehavior Release
-        {
-            get { return release; }
-        }
+        public static SessionBehavior Release { get; } = new SessionBehavior { Behavior = "release" };
 
-        public static SessionBehavior Delete
-        {
-            get { return delete; }
-        }
+        public static SessionBehavior Delete { get; } = new SessionBehavior { Behavior = "delete" };
 
         public bool Equals(SessionBehavior other)
         {
@@ -325,7 +315,7 @@ namespace Consul
             {
                 return Create(null, q, ct);
             }
-            var noChecksEntry = new SessionEntry()
+            var noChecksEntry = new SessionEntry
             {
                 Behavior = se.Behavior,
                 Checks = new List<string>(0),

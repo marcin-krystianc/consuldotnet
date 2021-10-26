@@ -413,8 +413,8 @@ namespace Consul.Test
                 var keyValue = Encoding.UTF8.GetBytes("test");
 
                 var txn = new List<KVTxnOp> {
-                    new KVTxnOp(keyName, KVTxnVerb.Lock) { Value = keyValue },
-                    new KVTxnOp(keyName, KVTxnVerb.Get)
+                    new KVTxnOp(keyName, KvTxnVerb.Lock) { Value = keyValue },
+                    new KVTxnOp(keyName, KvTxnVerb.Get)
                 };
 
                 var result = await _client.KV.Txn(txn);
@@ -452,7 +452,7 @@ namespace Consul.Test
 
                 // Run a read-only transaction.
                 txn = new List<KVTxnOp> {
-                    new KVTxnOp(keyName, KVTxnVerb.Get)
+                    new KVTxnOp(keyName, KvTxnVerb.Get)
                 };
 
                 result = await _client.KV.Txn(txn);

@@ -47,10 +47,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The result of the PUT, including a deserialised generic type object</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<WriteResult<TOut>> Execute(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new WriteResult<TOut>();
 
             var message = new HttpRequestMessage(HttpMethod.Put, BuildConsulUri(Endpoint, Params));
@@ -80,8 +82,8 @@ namespace Consul
                 result.Response = Deserialize<TOut>(ResponseStream);
             }
 
-            result.RequestTime = timer.Elapsed;
-            timer.Stop();
+            result.RequestTime = _timer.Elapsed;
+            _timer.Stop();
 
             return result;
         }
@@ -129,10 +131,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The result of the PUT</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<WriteResult> Execute(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new WriteResult();
 
             var message = new HttpRequestMessage(HttpMethod.Put, BuildConsulUri(Endpoint, Params));
@@ -157,8 +161,8 @@ namespace Consul
                 }
             }
 
-            result.RequestTime = timer.Elapsed;
-            timer.Stop();
+            result.RequestTime = _timer.Elapsed;
+            _timer.Stop();
 
             return result;
         }
@@ -209,10 +213,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The result of the PUT</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<WriteResult> Execute(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new WriteResult();
 
             HttpContent content;
@@ -254,8 +260,8 @@ namespace Consul
                 }
             }
 
-            result.RequestTime = timer.Elapsed;
-            timer.Stop();
+            result.RequestTime = _timer.Elapsed;
+            _timer.Stop();
 
             return result;
         }
@@ -307,10 +313,12 @@ namespace Consul
         /// </summary>
         /// <param name="ct">Cancellation token for long poll request. If set, OperationCanceledException will be thrown if the request is cancelled before completing</param>
         /// <returns>The result of the PUT, including a deserialised generic type object</returns>
+#pragma warning disable IDE1006 // Naming Styles
         public async Task<WriteResult<TOut>> Execute(CancellationToken ct)
+#pragma warning restore IDE1006 // Naming Styles
         {
             Client.CheckDisposed();
-            timer.Start();
+            _timer.Start();
             var result = new WriteResult<TOut>();
 
             HttpContent content = null;
@@ -361,8 +369,8 @@ namespace Consul
                 result.Response = Deserialize<TOut>(ResponseStream);
             }
 
-            result.RequestTime = timer.Elapsed;
-            timer.Stop();
+            result.RequestTime = _timer.Elapsed;
+            _timer.Stop();
 
             return result;
         }
