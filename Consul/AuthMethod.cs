@@ -32,8 +32,16 @@ namespace Consul
         public string Name { get; set; }
         public string Type { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string DisplayName { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public TimeSpan? MaxTokenTTL { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string TokenLocality  { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+
         public Dictionary<string, string> Config { get; set; }
 
         public bool ShouldSerializeCreateIndex()

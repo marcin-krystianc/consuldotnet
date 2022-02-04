@@ -40,6 +40,8 @@ namespace Consul
         public RoleLink[] Roles { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ServiceIdentity[] ServiceIdentities { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public NodeIdentity[] NodeIdentities    { get; set; }
         public bool Local { get; set; }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string AuthMethod { get; set; }
@@ -90,6 +92,12 @@ namespace Consul
         }
     }
 
+    public class NodeIdentity
+    {
+        public string NodeName { get; set; }
+        public string Datacenter { get; set; }
+    }
+
     /// <summary>
     /// Token is used to interact with ACL Tokens in Consul through the API
     /// </summary>
@@ -112,6 +120,10 @@ namespace Consul
             public ulong CreateIndex { get; set; }
             [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
             public ulong ModifyIndex { get; set; }
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public TimeSpan? ExpirationTTL { get; set; }
+            [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+            public DateTime? ExpirationTime { get; set; }
         }
 
         /// <summary>

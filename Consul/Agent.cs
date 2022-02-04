@@ -123,6 +123,15 @@ namespace Consul
         public string ServiceID { get; set; }
         public string ServiceName { get; set; }
         public string Type { get; set; }
+        public int ExposedPort { get; set; }
+        //public HealthCheckDefinition Definition  { get; set; }
+
+    }
+
+    public class  AgentWeights
+    {
+        public int Passing  { get; set; }
+        public int Warning  { get; set; }
     }
 
     /// <summary>
@@ -130,15 +139,26 @@ namespace Consul
     /// </summary>
     public class AgentService
     {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Kind { get; set; }
         public string ID { get; set; }
         public string Service { get; set; }
         public string[] Tags { get; set; }
+        public IDictionary<string, string> Meta { get; set; }
         public int Port { get; set; }
         public string Address { get; set; }
-
         public IDictionary<string, ServiceTaggedAddress> TaggedAddresses { get; set; }
+        public AgentWeights Weights    { get; set; }
         public bool EnableTagOverride { get; set; }
-        public IDictionary<string, string> Meta { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ulong CreateIndex { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ulong ModifyIndex { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string ContentHash { get; set; }
+
+        // Proxy             *AgentServiceConnectProxyConfig `json:",omitempty"`
+        // Connect           *AgentServiceConnect            `json:",omitempty"`
     }
 
     /// <summary>
@@ -170,6 +190,9 @@ namespace Consul
     public class AgentServiceRegistration
     {
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string Kind { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string ID { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -185,7 +208,19 @@ namespace Consul
         public string Address { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string SocketPath { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public IDictionary<string, ServiceTaggedAddress> TaggedAddresses { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public bool EnableTagOverride { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public IDictionary<string, string> Meta { get; set; }
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public AgentWeights Weights    { get; set; }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public AgentServiceCheck Check { get; set; }
@@ -193,11 +228,9 @@ namespace Consul
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public AgentServiceCheck[] Checks { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IDictionary<string, string> Meta { get; set; }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public IDictionary<string, ServiceTaggedAddress> TaggedAddresses { get; set; }
+        // Proxy             *AgentServiceConnectProxyConfig `json:",omitempty"`
+        // Connect           *AgentServiceConnect            `json:",omitempty"`
     }
 
     /// <summary>
