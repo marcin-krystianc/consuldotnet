@@ -87,6 +87,12 @@ namespace Consul
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public QueryDatacenterOptions Failover { get; set; }
 
+        // IgnoreCheckIDs is an optional list of health check IDs to ignore when
+        // considering which nodes are healthy. It is useful as an emergency measure
+        // to temporarily override some health check that is producing false negatives
+        // for example.
+        public string[] IgnoreCheckIDs { get; set; }
+
         /// <summary>
         /// If OnlyPassing is true then we will only include nodes with passing
         /// health checks (critical AND warning checks will cause a node to be
@@ -102,6 +108,16 @@ namespace Consul
         /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Tags { get; set; }
+
+        // NodeMeta is a map of required node metadata fields. If a key/value
+        // pair is in this map it must be present on the node in order for the
+        // service entry to be returned.
+        public Dictionary<string, string> NodeMeta { get; set; }
+
+        // ServiceMeta is a map of required service metadata fields. If a key/value
+        // pair is in this map it must be present on the node in order for the
+        // service entry to be returned.
+        public Dictionary<string, string> ServiceMeta { get; set; }
     }
 
     /// <summary>

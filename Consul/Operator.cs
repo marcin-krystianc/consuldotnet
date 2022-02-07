@@ -53,6 +53,9 @@ namespace Consul
         /// </summary>
         public bool Leader { get; set; }
 
+        // Protocol version is the raft protocol version used by the server
+        public string ProtocolVersion  { get; set; }
+
         /// <summary>
         /// Voter is true if this server has a vote in the cluster. This might
         /// be false if the server is staging and still coming online, or if
@@ -92,9 +95,25 @@ namespace Consul
         /// </summary>
         public string Datacenter { get; set; }
         /// <summary>
+        /// Segment has the network segment this request corresponds to
+        /// </summary>
+        public string Segment { get; set; }
+        /// <summary>
+        /// Partition has the admin partition this request corresponds to.
+        /// </summary>
+        public string Partition { get; set; }
+        /// <summary>
+        /// Messages has information or errors from serf
+        /// </summary>
+        public IDictionary<string, string> Messages  { get; set; }
+        /// <summary>
         /// A map of the encryption keys to the number of nodes they're installed on
         /// </summary>
         public IDictionary<string, int> Keys { get; set; }
+        /// <summary>
+        /// A map of the encryption primary keys to the number of nodes they're installed on
+        /// </summary>
+        public IDictionary<string, int> PrimaryKeys { get; set; }
         /// <summary>
         /// The total number of nodes in this ring
         /// </summary>

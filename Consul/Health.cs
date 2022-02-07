@@ -112,8 +112,34 @@ namespace Consul
         public string Output { get; set; }
         public string ServiceID { get; set; }
         public string ServiceName { get; set; }
+        public string[] ServiceTags { get; set; }
         public string Type { get; set; }
+        /*
+         Definition HealthCheckDefinition
+          CreateIndex uint64
+          ModifyIndex uint64
+        */
     }
+
+    /*
+type HealthCheckDefinition struct {
++       HTTP                                   string
++       Header                                 map[string][]string
++       Method                                 string
++       Body                                   string
++       TLSServerName                          string
++       TLSSkipVerify                          bool
++       TCP                                    string
++       IntervalDuration                       time.Duration `json:"-"`
++       TimeoutDuration                        time.Duration `json:"-"`
++       DeregisterCriticalServiceAfterDuration time.Duration `json:"-"`
++
++       // DEPRECATED in Consul 1.4.1. Use the above time.Duration fields instead.
++       Interval                       ReadableDuration
++       Timeout                        ReadableDuration
++       DeregisterCriticalServiceAfter ReadableDuration
++}
+     */
 
     public static class HealthCheckExtension
     {

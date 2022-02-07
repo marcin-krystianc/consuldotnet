@@ -26,6 +26,7 @@ namespace Consul
     public class CoordinateEntry
     {
         public string Node { get; set; }
+        public string Segment { get; set; }
         public SerfCoordinate Coord { get; set; }
     }
 
@@ -45,6 +46,7 @@ namespace Consul
     public class CoordinateDatacenterMap
     {
         public string Datacenter { get; set; }
+        public string AreaID { get; set; }
         public List<CoordinateEntry> Coordinates { get; set; }
         public CoordinateDatacenterMap()
         {

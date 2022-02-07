@@ -609,6 +609,7 @@ namespace Consul
         public TimeSpan MonitorRetryTime { get; set; }
         public bool LockTryOnce { get; set; }
 
+        public TimeSpan LockDelay { get; set; }
         public LockOptions(string key)
         {
             Key = key;

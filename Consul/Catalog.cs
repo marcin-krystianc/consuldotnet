@@ -24,6 +24,12 @@ using Newtonsoft.Json;
 
 namespace Consul
 {
+    public class Weights
+    {
+        public int Passing  { get; set; }
+        public int Warning  { get; set; }
+    }
+
     public class Node
     {
         // Cannot be "Node" as in the Go API because in C#, properties cannot
@@ -31,7 +37,10 @@ namespace Consul
         [JsonProperty(PropertyName = "Node")]
         public string Name { get; set; }
         public string Address { get; set; }
+        public string Datacenter { get; set; }
         public Dictionary<string, string> TaggedAddresses { get; set; }
+        public ulong CreateIndex { get; set; }
+        public ulong ModifyIndex { get; set; }
     }
 
     public class ServiceTaggedAddress
@@ -45,6 +54,7 @@ namespace Consul
     {
         public string Node { get; set; }
         public string Address { get; set; }
+        public string Datacenter { get; set; }
         public string ServiceID { get; set; }
         public string ServiceName { get; set; }
         public string ServiceAddress { get; set; }
@@ -53,6 +63,13 @@ namespace Consul
         public Dictionary<string, ServiceTaggedAddress> ServiceTaggedAddresses { get; set; }
         public bool ServiceEnableTagOverride { get; set; }
         public IDictionary<string, string> ServiceMeta { get; set; }
+        public Weights ServiceWeights { get; set; }
+        /*
+        erviceProxy             *AgentServiceConnectProxyConfig
+        CreateIndex              uint64
+        Checks                   HealthChecks
+        ModifyIndex              uint64
+        */
     }
 
     public class CatalogNode
@@ -73,6 +90,8 @@ namespace Consul
         public string Datacenter { get; set; }
         public AgentService Service { get; set; }
         public AgentCheck Check { get; set; }
+        public HealthCheck[] Checks { get; set; }
+        public bool SkipNodeUpdate { get; set; }
     }
 
     public class CatalogDeregistration

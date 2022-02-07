@@ -52,6 +52,12 @@ namespace Consul
         /// </summary>
         public ulong WaitIndex { get; set; }
 
+        // WaitHash is used by some endpoints instead of WaitIndex to perform blocking
+        // on state based on a hash of the response rather than a monotonic index.
+        // This is required when the state being blocked on is not stored in Raft, for
+        // example agent-local proxy configuration.
+        public ulong WaitHash { get; set; }
+
         /// <summary>
         /// WaitTime is used to bound the duration of a wait. Defaults to that of the Config, but can be overridden.
         /// </summary>
@@ -69,6 +75,34 @@ namespace Consul
         /// for the sort.
         /// </summary>
         public string Near { get; set; }
+
+        /*
+            // NodeMeta is used to filter results by nodes with the given
+            // metadata key/value pairs. Currently, only one key/value pair can
+            // be provided for filtering.
+            NodeMeta map[string]string
+
+            // RelayFactor is used in keyring operations to cause responses to be
+            // relayed back to the sender through N other random nodes. Must be
+            // a value from 0 to 5 (inclusive).
+            RelayFactor uint8
+
+            // LocalOnly is used in keyring list operation to force the keyring
+            // query to only hit local servers (no WAN traffic).
+            LocalOnly bool
+
+            // Connect filters prepared query execution to only include Connect-capable
+            // services. This currently affects prepared query execution.
+            Connect bool
+
+            // ctx is an optional context pass through to the underlying HTTP
+            // request layer. Use Context() and WithContext() to manage this.
+            ctx context.Context
+
+            // Filter requests filtering data prior to it being returned. The string
+            // is a go-bexpr compatible expression.
+            Filter string
+        */
     }
 
     /// <summary>
@@ -91,5 +125,16 @@ namespace Consul
         /// Token is used to provide a per-request ACL token which overrides the agent's default token.
         /// </summary>
         public string Token { get; set; }
+
+        /*
+         	// RelayFactor is used in keyring operations to cause responses to be
+	        // relayed back to the sender through N other random nodes. Must be
+	        // a value from 0 to 5 (inclusive).
+	        RelayFactor uint8
+
+	        // ctx is an optional context pass through to the underlying HTTP
+	        // request layer. Use Context() and WithContext() to manage this.
+	        ctx context.Context
+         */
     }
 }
