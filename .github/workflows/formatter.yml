@@ -30,5 +30,5 @@ jobs:
           git config user.name 'octocat'
           git config user.email 'octocat@users.noreply.github.com'
           git add .
-          git commit -m "style: fix whitespaces" | true
+          git commit -m "style: fix whitespaces"
           git push
