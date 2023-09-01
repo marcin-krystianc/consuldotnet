@@ -29,4 +29,4 @@ jobs:
         with:
           file_pattern: "**.cs"
           commit_author: octocat <octocat@users.noreply.github.com>
-          commit_message: style: fix whitespaces
+          commit_message: "style: fix whitespaces"
