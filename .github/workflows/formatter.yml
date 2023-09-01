@@ -23,7 +23,9 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Format scripts
-        run: dotnet tool run dotnet-format --fix-whitespace
+        run: |
+          dotnet tool restore
+          dotnet tool run dotnet-format --fix-whitespace
 
       - name: Set Git config
         run: |
