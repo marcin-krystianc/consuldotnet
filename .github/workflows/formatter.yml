@@ -29,5 +29,5 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: ['**.cs']
+          file_pattern: '**.cs'
           commit_author: "octocat <octocat@users.noreply.github.com>"
