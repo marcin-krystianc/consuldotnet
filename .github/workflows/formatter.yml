@@ -3,8 +3,6 @@ name: Format
 on:
   pull_request:
     paths: ['**.cs']
-  push:
-    paths: ['**.cs']
 
 permissions:
   contents: write
