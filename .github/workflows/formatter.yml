@@ -27,7 +27,12 @@ jobs:
           dotnet tool restore
           dotnet tool run dotnet-format --fix-whitespace
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          file_pattern: '**.cs'
-          commit_author: "octocat <octocat@users.noreply.github.com>"
+        run: |
+          git config user.name 'octocat'
+          git config user.email 'octocat@users.noreply.github.com'
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "style: fix whitespaces" | true
+          git push
