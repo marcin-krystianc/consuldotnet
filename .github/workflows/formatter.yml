@@ -22,7 +22,7 @@ jobs:
         with:
           dotnet-version: 7.0.x
 
-      - name: Format scripts
+      - name: Format code
         run: |
           dotnet tool restore
           dotnet tool run dotnet-format --fix-whitespace
