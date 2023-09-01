@@ -28,5 +28,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: "**.cs"
-          commit_user_name: octocat
-          commit_user_email: octocat@users.noreply.github.com
+          commit_author: octocat <octocat@users.noreply.github.com>
+          commit_message: style: fix whitespaces
