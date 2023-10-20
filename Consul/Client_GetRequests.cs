@@ -79,13 +79,14 @@ namespace Consul
             result.StatusCode = response.StatusCode;
             ResponseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
-            var isSpecialStatusCode = response.StatusCode == HttpStatusCode.ServiceUnavailable || (int)response.StatusCode == 429;
+            var isSpecialCase =
+                ((int)response.StatusCode == 503 && Endpoint.StartsWith("v1/agent/health/service/name/", StringComparison.OrdinalIgnoreCase)) ||
+                ((int)response.StatusCode == 429 && Endpoint.StartsWith("v1/agent/health/service/name/", StringComparison.OrdinalIgnoreCase)) ||
+                ((int)response.StatusCode == 503 && Endpoint.StartsWith("v1/agent/health/service/id/", StringComparison.OrdinalIgnoreCase)) ||
+                ((int)response.StatusCode == 429 && Endpoint.StartsWith("v1/agent/health/service/id/", StringComparison.OrdinalIgnoreCase));
 
-            if (!response.IsSuccessStatusCode && !isSpecialStatusCode && (
-                (response.StatusCode != HttpStatusCode.NotFound && typeof(TOut) != typeof(TxnResponse)) ||
-                (response.StatusCode != HttpStatusCode.Conflict && typeof(TOut) == typeof(TxnResponse))))
+            if (response.StatusCode != HttpStatusCode.NotFound && !response.IsSuccessStatusCode && !isSpecialCase)
             {
-
                 if (ResponseStream == null)
                 {
                     throw new ConsulRequestException(string.Format("Unexpected response, status code {0}",
@@ -98,7 +99,7 @@ namespace Consul
                 }
             }
 
-            if (response.IsSuccessStatusCode || isSpecialStatusCode)
+            if (response.IsSuccessStatusCode || isSpecialCase)
             {
                 result.Response = Deserialize<TOut>(ResponseStream);
             }
@@ -325,9 +326,11 @@ namespace Consul
             result.StatusCode = response.StatusCode;
             ResponseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
 
-            var isSpecialStatusCode = response.StatusCode == HttpStatusCode.ServiceUnavailable || (int)response.StatusCode == 429;
+            var isSpecialCase =
+                ((int)response.StatusCode == 503 && Endpoint.StartsWith("v1/agent/health/service/name/", StringComparison.OrdinalIgnoreCase)) ||
+                ((int)response.StatusCode == 429 && Endpoint.StartsWith("v1/agent/health/service/name/", StringComparison.OrdinalIgnoreCase));
 
-            if (!isSpecialStatusCode && response.StatusCode != HttpStatusCode.NotFound && !response.IsSuccessStatusCode)
+            if (response.StatusCode != HttpStatusCode.NotFound && !response.IsSuccessStatusCode && !isSpecialCase)
             {
                 if (ResponseStream == null)
                 {
@@ -341,7 +344,7 @@ namespace Consul
                 }
             }
 
-            if (response.IsSuccessStatusCode || isSpecialStatusCode)
+            if (response.IsSuccessStatusCode || isSpecialCase)
             {
                 using (var reader = new StreamReader(ResponseStream))
                 {
