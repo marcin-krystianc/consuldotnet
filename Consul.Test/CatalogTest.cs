@@ -270,6 +270,8 @@ namespace Consul.Test
             }
             Assert.NotEmpty(services.Response);
             Assert.Equal(services.Response[0].ServiceID, registration.Name + "-sidecar-proxy");
+            await _client.Agent.ServiceDeregister(services.Response[0].ServiceID);
+            await _client.Agent.ServiceDeregister(registration.Name);
 
         }
 
