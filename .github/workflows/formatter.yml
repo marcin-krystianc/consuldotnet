@@ -68,4 +68,4 @@ jobs:
         run: |
           git apply format.patch || true
           git commit -am "style: fix whitespaces" || true
-          git push origin || true
+          git push || true
