@@ -23,7 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Consul.Filtering;
 
-namespace Consul 
+namespace Consul
 {
     /// <summary>
     /// The interface for the Agent API Endpoints
