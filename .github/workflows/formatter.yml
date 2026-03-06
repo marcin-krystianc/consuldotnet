@@ -68,6 +68,6 @@ jobs:
         run: |
           if [ -s format.patch ]; then
             git apply format.patch
-            git commit -am "style: fix whitespaces"
+          git push
             git push
           fi
