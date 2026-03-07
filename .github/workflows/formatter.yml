@@ -66,6 +66,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git apply format.patch || true
-          git commit -am "style: fix whitespaces" || true
+          if [ -s format.patch ]; then
+            git apply format.patch
           git push
+            git push
+          fi
