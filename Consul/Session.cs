@@ -22,7 +22,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using Newtonsoft.Jsonnnnn;
 
 #if !(NETSTANDARD || NETCOREAPP)
     using System.Runtime.Serialization;
