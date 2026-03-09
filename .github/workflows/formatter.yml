@@ -72,6 +72,6 @@ jobs:
 
       - name: Commit changes
         run: |
-          git apply ${{ runner.temp }}/format-patch
+          git apply ${{ runner.temp }}/format-patch/format.patch 
           git commit -am "style: fix whitespaces"
           git push
