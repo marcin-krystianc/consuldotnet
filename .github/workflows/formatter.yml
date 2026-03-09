@@ -72,6 +72,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git apply --allow-empty ${{ runner.temp }}/format-patch/format.patch 
-          git commit -am "style: fix whitespaces"
-          git push
+          if [ -s "${{ runner.temp }}/format-patch/format.patch" ]; then
+            git apply ${{ runner.temp }}/format-patch/format.patch 
+            git commit -am "style: fix whitespaces"
+            git push
+          fi
