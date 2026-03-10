@@ -22,7 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Consul
+namespace Consul 
 {
     /// <summary>
     /// TokenEntry is used to represent an ACL Token in Consul
